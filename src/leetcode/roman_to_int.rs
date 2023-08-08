@@ -36,23 +36,24 @@ impl Solution {
                 (None, _) => panic!("Index out of range"),
                 (Some(char), None) => {
                     acc += Self::single_digit_roman_to_int(char) as i32;
-                    i+= 1
+                    i += 1
                 }
                 (Some(primary_char), Some(next_char)) => {
                     if Self::check_subtraction(primary_char, next_char) == true {
-                        acc += (Self::single_digit_roman_to_int(next_char) - Self::single_digit_roman_to_int(primary_char)) as i32;
-                        i+= 2;
+                        acc += (Self::single_digit_roman_to_int(next_char)
+                            - Self::single_digit_roman_to_int(primary_char))
+                            as i32;
+                        i += 2;
                     } else {
                         acc += Self::single_digit_roman_to_int(primary_char) as i32;
-                        i+=1
+                        i += 1
                     }
                 }
             }
-        };
+        }
         return acc;
     }
 
-    /// Takes a single roman digit and converts it into a u16
     fn single_digit_roman_to_int(c: char) -> u16 {
         return match c {
             'I' => 1,
@@ -62,41 +63,34 @@ impl Solution {
             'C' => 100,
             'D' => 500,
             'M' => 1000,
-            _ => {panic!("Not a valid character!")}
-        }
+            _ => {
+                panic!("Not a valid character!")
+            }
+        };
     }
 
-    /// Takes a set of two characters and returns if a subtraction would be
-    /// performed or not
     fn check_subtraction(primary_char: char, next_char: char) -> bool {
         return match primary_char {
-            'I' => {
-                match next_char {
-                    'V' => true,
-                    'X' => true,
-                    _ => false
-                }
-            }
-            'X' => {
-                match next_char {
-                    'L' => true,
-                    'C' => true,
-                    _ => false
-                }
-            }
-            'C' => {
-                match next_char {
-                    'D' => true,
-                    'M' => true,
-                    _ => false
-                }
-            }
-            _ => false
-        }
+            'I' => match next_char {
+                'V' => true,
+                'X' => true,
+                _ => false,
+            },
+            'X' => match next_char {
+                'L' => true,
+                'C' => true,
+                _ => false,
+            },
+            'C' => match next_char {
+                'D' => true,
+                'M' => true,
+                _ => false,
+            },
+            _ => false,
+        };
     }
 }
 
-// roman_to_int tests
 #[test]
 fn example_1() {
     assert_eq!(Solution::roman_to_int(format!("III")), 3);
