@@ -44,7 +44,7 @@ impl Solution {
                     }
                     if !end_loop {
                         new_string.push(primary_char);
-                        i+=1;
+                        i += 1;
                     }
                 }
             }
@@ -55,13 +55,13 @@ impl Solution {
 }
 
 #[test]
-fn example_1(){
+fn example_1() {
     let strs = vec![format!("flower"), format!("flow"), format!("flight")];
     assert_eq!(Solution::longest_common_prefix(strs), "fl");
 }
 
 #[test]
-fn example_2(){
+fn example_2() {
     let strs = vec![format!("dog"), format!("racecar"), format!("car")];
     assert_eq!(Solution::longest_common_prefix(strs), "");
 }
