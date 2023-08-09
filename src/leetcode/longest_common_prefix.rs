@@ -19,6 +19,51 @@ impl Solution {
     /// first string, and check if that is equal to the remaining strings.
     /// If it is equal, add that to its own string, and repeat until there is
     /// a single mis-match. At that point, return the new string.
+    ///
+    /// # Debrief
+    /// The initial solution:
+    /// ```rust
+    /// pub fn longest_common_prefix(strs: Vec<String>) -> String {
+    ///     let mut new_string: Vec<char> = Vec::new();
+    ///     let mut end_loop = false;
+    ///     let mut i = 0;
+    ///
+    ///     while !end_loop {
+    ///         match strs[0].chars().nth(i) {
+    ///             None => end_loop = true,
+    ///             Some(primary_char) => {
+    ///                 for x in &strs {
+    ///                     match x.chars().nth(i) {
+    ///                         None => {
+    ///                             end_loop = true;
+    ///                             break;
+    ///                         }
+    ///                         Some(check_char) => {
+    ///                             if primary_char != check_char {
+    ///                                 end_loop = true;
+    ///                                 break;
+    ///                             }
+    ///                         }
+    ///                     }
+    ///                 }
+    ///                 if !end_loop {
+    ///                     new_string.push(primary_char);
+    ///                     i+=1;
+    ///                 }
+    ///             }
+    ///         }
+    ///     }
+    ///
+    ///     return new_string.into_iter().collect();
+    /// }
+    /// ```
+    /// Certainly works, but according to leetcode, is slower than ~70% of the
+    /// submitted solutions. It is also larger than ~80% of the submitted solutions.
+    ///
+    /// In the worst-case scenario, if all of the words match 100%, then the
+    /// program will iterate through every single letter of every single word.
+    ///
+    /// Also, when looping over each "checked word", it includes the original
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
         let mut new_string: Vec<char> = Vec::new();
         let mut end_loop = false;
