@@ -64,16 +64,94 @@ impl Solution {
     /// program will iterate through every single letter of every single word.
     ///
     /// Also, when looping over each "checked word", it includes the original
+    ///
+    /// ---
+    ///
+    /// The new solution:
+    /// ```rust
+    ///  pub fn longest_common_prefix(strs: Vec<String>) -> String {
+    ///     // Checks whole words
+
+    ///     let mut i = 0;
+    ///     let mut x = 1;
+    ///     let mut matched_words = true;
+    ///     while x < strs.len() {
+    ///         if strs[i] != strs[x] {
+    ///             matched_words = false;
+    ///             break;
+    ///         }
+    ///         i += 1;
+    ///         x += 1;
+    ///     }
+
+    ///     if matched_words {
+    ///         return format!("{}", &strs[0]);
+    ///     }
+
+    ///     // Checks individual letters
+    ///     let mut new_string: Vec<char> = Vec::new();
+    ///     let mut end_loop = false;
+    ///     i = 0;
+
+    ///     while !end_loop {
+    ///         match strs[0].chars().nth(i) {
+    ///             None => end_loop = true,
+    ///             Some(primary_char) => {
+    ///                 for x in &strs[1..] {
+    ///                     match x.chars().nth(i) {
+    ///                         None => {
+    ///                             end_loop = true;
+    ///                             break;
+    ///                         }
+    ///                         Some(check_char) => {
+    ///                             if primary_char != check_char {
+    ///                                 end_loop = true;
+    ///                                 break;
+    ///                             }
+    ///                         }
+    ///                     }
+    ///                 }
+    ///                 if !end_loop {
+    ///                     new_string.push(primary_char);
+    ///                     i += 1;
+    ///                 }
+    ///             }
+    ///         }
+    ///     }
+    ///
+    ///    return new_string.into_iter().collect();
+    /// }
+    /// ```
+    /// runs *much* better, now beating 80% of other submissions.
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
+        // Checks whole words
+
+        let mut i = 0;
+        let mut x = 1;
+        let mut matched_words = true;
+        while x < strs.len() {
+            if strs[i] != strs[x] {
+                matched_words = false;
+                break;
+            }
+            i += 1;
+            x += 1;
+        }
+
+        if matched_words {
+            return format!("{}", &strs[0]);
+        }
+
+        // Checks individual letters
         let mut new_string: Vec<char> = Vec::new();
         let mut end_loop = false;
-        let mut i = 0;
+        i = 0;
 
         while !end_loop {
             match strs[0].chars().nth(i) {
                 None => end_loop = true,
                 Some(primary_char) => {
-                    for x in &strs {
+                    for x in &strs[1..] {
                         match x.chars().nth(i) {
                             None => {
                                 end_loop = true;
