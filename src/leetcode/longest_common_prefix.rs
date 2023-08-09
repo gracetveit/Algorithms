@@ -8,9 +8,9 @@ impl Solution {
     ///
     /// # Example
     /// ```rust
-    /// use algos::leetcode::Solution;
+    /// use algo::leetcode::Solution;
     ///
-    /// let strs = vec![format!("flower"), format!("flow"), format!!("flight")];
+    /// let strs = vec![format!("flower"), format!("flow"), format!("flight")];
     /// assert_eq!(Solution::longest_common_prefix(strs), "fl");
     /// ```
     ///
@@ -20,7 +20,37 @@ impl Solution {
     /// If it is equal, add that to its own string, and repeat until there is
     /// a single mis-match. At that point, return the new string.
     pub fn longest_common_prefix(strs: Vec<String>) -> String {
-        todo!()
+        let mut new_string: Vec<char> = Vec::new();
+        let mut end_loop = false;
+        let mut i = 0;
+
+        while !end_loop {
+            match strs[0].chars().nth(i) {
+                None => end_loop = true,
+                Some(primary_char) => {
+                    for x in &strs {
+                        match x.chars().nth(i) {
+                            None => {
+                                end_loop = true;
+                                break;
+                            }
+                            Some(check_char) => {
+                                if primary_char != check_char {
+                                    end_loop = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if !end_loop {
+                        new_string.push(primary_char);
+                        i+=1;
+                    }
+                }
+            }
+        }
+
+        return new_string.into_iter().collect();
     }
 }
 
