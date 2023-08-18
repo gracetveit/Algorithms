@@ -25,28 +25,67 @@ impl Solution {
     /// onto the nth + 1 element.
     /// If you reach the end and can't find a matching element, return false.
     /// If the vec is then empty, return true.
+    ///
+    /// # Approach #2
+    /// The basic idea works, but we need to be more 'stack-like'.
+    /// When we encounter an open bracket, we need to find the closing bracket,
+    /// and then 'zoom in' on the contents inside, return true only if we can
+    /// resolve every bracket.
+    ///
+    /// When we encounter an open bracket, it is added to the stack.
+    /// It is removed from the stack if we find the corresponding closed bracket.
+    ///
+    /// Every open bracket encounterd is added to the stack.
+    ///
+    /// If we encounter a closing brakcet that doesn't match the current open bracket,
+    /// we immedietly return false.
+    ///
+    /// If we encounter a matching closing bracket, we remove that bracket from the stack.
     pub fn is_valid(s: String) -> bool {
-        if s.len() == 0 {
-            return true
-        }
+        // if s.len() == 0 {
+        //     return true
+        // }
 
-        // Turn into vec
-        let mut s_vec: Vec<char> = s.chars().collect();
-        let checked_char = s_vec.remove(0);
-        // Check first Element
-        match Solution::open(checked_char) {
-            Some(c) => {
-                // Iterate through vec
-                match Solution::closed(c, s_vec) {
-                    Some(updated_vec) => {
-                        let new_string: String = updated_vec.into_iter().collect();
-                        return Solution::is_valid(new_string);
+        // // Turn into vec
+        let mut stack: Vec<char> = Vec::new();
+        let s_vec: Vec<char> = s.chars().collect();
+        let mut i = 0;
+
+        while i < s_vec.len() {
+            let c = Solution::open(s_vec[i]);
+                match c {
+                    Some(c) => {
+                        stack.push(c);
+                    },
+                    None => {
+                        if stack.len() > 0 && stack[stack.len() - 1] == s_vec[i] {
+                            stack.pop();
+                        } else {
+                            return false
+                        }
                     }
-                    None => return false
                 }
-            }
-            None => return false
+            i += 1;
         }
+        return stack.len() == 0;
+        // // Check first Element
+        // match Solution::open(checked_char) {
+        //     Some(c) => {
+        //         // Iterate through vec
+        //         match Solution::closed(c, s_vec) {
+        //             Some(updated_vec) => {
+        //                 let new_string: String = updated_vec.into_iter().collect();
+        //                 return Solution::is_valid(new_string);
+        //             }
+        //             None => return false
+        //         }
+        //     }
+        //     None => return false
+        // }
+
+        //
+
+
     }
 
     /// Checks if the char is an open bracket, or if closed, nothing
