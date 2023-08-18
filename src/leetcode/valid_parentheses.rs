@@ -1,6 +1,8 @@
 use super::Solution;
 
 impl Solution {
+    /// Solution for Leetcode problem #20: [Valid Parenthesis](https://leetcode.com/problems/valid-parentheses/)
+    ///
     /// Given a string `s` containing just the characters `'('`, `')'`, `'{'`,
     /// `'}'`, `'['`, and `']'`, determin if the input string is valid. A string
     /// is valid if:
