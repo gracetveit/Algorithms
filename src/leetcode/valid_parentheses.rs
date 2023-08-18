@@ -42,11 +42,6 @@ impl Solution {
     ///
     /// If we encounter a matching closing bracket, we remove that bracket from the stack.
     pub fn is_valid(s: String) -> bool {
-        // if s.len() == 0 {
-        //     return true
-        // }
-
-        // // Turn into vec
         let mut stack: Vec<char> = Vec::new();
         let s_vec: Vec<char> = s.chars().collect();
         let mut i = 0;
@@ -68,49 +63,16 @@ impl Solution {
             i += 1;
         }
         return stack.len() == 0;
-        // // Check first Element
-        // match Solution::open(checked_char) {
-        //     Some(c) => {
-        //         // Iterate through vec
-        //         match Solution::closed(c, s_vec) {
-        //             Some(updated_vec) => {
-        //                 let new_string: String = updated_vec.into_iter().collect();
-        //                 return Solution::is_valid(new_string);
-        //             }
-        //             None => return false
-        //         }
-        //     }
-        //     None => return false
-        // }
-
-        //
-
-
     }
 
     /// Checks if the char is an open bracket, or if closed, nothing
-    pub fn open(c: char) -> Option<char> {
+    fn open(c: char) -> Option<char> {
         match c {
             '(' => Some(')'),
             '{' => Some('}'),
             '[' => Some(']'),
             _ => None
         }
-    }
-
-    /// Checks if the vec contains the matching closing character.
-    /// Returns none if no such matching character exists; otherwise returns
-    /// an updated vec with the closing char removed.
-    pub fn closed(c: char, mut v: Vec<char>) -> Option<Vec<char>> {
-        let mut i = 0;
-        while i < v.len() {
-            if v[i] == c {
-                v.remove(i);
-                return Some(v);
-            }
-            i += 1;
-        }
-        return None;
     }
 }
 
