@@ -48,18 +48,18 @@ impl Solution {
 
         while i < s_vec.len() {
             let c = Solution::open(s_vec[i]);
-                match c {
-                    Some(c) => {
-                        stack.push(c);
-                    },
-                    None => {
-                        if stack.len() > 0 && stack[stack.len() - 1] == s_vec[i] {
-                            stack.pop();
-                        } else {
-                            return false
-                        }
+            match c {
+                Some(c) => {
+                    stack.push(c);
+                }
+                None => {
+                    if stack.len() > 0 && stack[stack.len() - 1] == s_vec[i] {
+                        stack.pop();
+                    } else {
+                        return false;
                     }
                 }
+            }
             i += 1;
         }
         return stack.len() == 0;
@@ -71,19 +71,19 @@ impl Solution {
             '(' => Some(')'),
             '{' => Some('}'),
             '[' => Some(']'),
-            _ => None
+            _ => None,
         }
     }
 }
 
 #[test]
-fn example_2(){
+fn example_2() {
     let s = format!("()[]{{}}");
     assert_eq!(Solution::is_valid(s), true);
 }
 
 #[test]
-fn example_3(){
+fn example_3() {
     let s = format!("(]");
     assert_eq!(Solution::is_valid(s), false);
 }
